@@ -1,0 +1,22 @@
+{
+  "name": "2025node",
+  "version": "1.0.0",
+  "description": "2025 Node.js 수업",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wizardwid/2025_Node.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wizardwid/2025_Node.js/issues"
+  },
+  "homepage": "https://github.com/wizardwid/2025_Node.js#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
