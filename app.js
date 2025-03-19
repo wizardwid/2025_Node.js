@@ -4,6 +4,15 @@ const app = express();
 
 app.use(express.json());
 
+// 라우터 설정
+app.get('/swag', (req, res) => {
+  res.status(200).send('Get swag');
+});
+
+app.post('/swag', (req, res) => {
+  res.status(200).send('Post swag');
+});
+
 // 루트 경로에 대한 GET 요청 처리
 app.get('/swag/:person', (req, res) => {
   const person = req.params.person;
