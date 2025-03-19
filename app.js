@@ -5,9 +5,9 @@ const app = express();
 app.use(express.json());
 
 // 루트 경로에 대한 GET 요청 처리
-app.post('/swag', (req, res) => {
-  // 클라이언트에게 응답 내용 전송
-  res.send(req.body);
+app.get('/swag/:person', (req, res) => {
+  const person = req.params.person;
+  res.status(200).send(person);
 });
 
 // 서버를 3000번 포트에서 실행
