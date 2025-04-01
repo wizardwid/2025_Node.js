@@ -17,6 +17,7 @@
   "homepage": "https://github.com/wizardwid/2025_Node.js#readme",
   "dependencies": {
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mysql2": "^3.14.0"
   }
 }
