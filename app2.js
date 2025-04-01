@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
+const dotenv = require('dotenv');
+
+dotenv.config(); 
 
 const app = express();
 
@@ -9,13 +12,11 @@ app.set('view engine', 'ejs');
 // path.join : 경로지정자를 운영체제에 맞추어 줌
 app.set('views', path.join(__dirname, 'views'));
 
-const travelList = ['뉴욕', '파리', '서울', '도쿄'];
-
 const db = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'111111',
-    database:'traveldb'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 })
 
 db.connect((err)=>{
