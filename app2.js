@@ -27,8 +27,18 @@ db.connect((err)=>{
     console.log('MYSQL에 연결되었습니다.');
 })
 
-app.get('/', (req, res) => {
-
+app.get('/travel', (req, res) => {
+    const _query = 'SELECT id, name FROM travelList';
+    db.query(_query, (err, results)=>{
+        if(err){
+            console.error('데이터베이스 쿼리 실패 : ', err);
+            res.status(500).end('Internal Server Error');
+            return;
+        }
+        const travelList = results;
+        res.render('travel', {travelList});
+    });
+    
 });
 
 app.get('/travel', (req, res) => {
