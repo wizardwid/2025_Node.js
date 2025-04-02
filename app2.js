@@ -37,19 +37,32 @@ app.get('/travel', (req, res) => {
         }
         const travelList = results;
         res.render('travel', {travelList});
-    });
-    
+    });    
 });
 
-app.get('/travel', (req, res) => {
-    res.render('travel', {travelList});
+app.get('/travel/:id', (req, res) => {
+    const travelId = req.params.id;
+    const query = 'SELECT * FROM travelList WHERE id = ?';
+    db.query(query, [travelId], (err, results)=>{
+        if(err){
+            console.error('데이터베이스 쿼리 실패 : ', err);
+            res.status(500).end('Internal Server Error');
+            return;
+        }
+        if(results.length === 0){
+            res.status(404).send('여행지를 찾을 수 없습니다.');
+            return;
+        }
+        const travel = results[0];
+        res.render('travelDetail', {travel});
+    });    
 });
 
 app.use((req, res) => {
 
-})
+});
 
-// 서버를 3000번 포트에서 실행
+// 서버를 3001번 포트에서 실행
 app.listen(3001, () => {
     console.log('서버가 http://localhost:3001 에서 실행 중입니다.');
   });
