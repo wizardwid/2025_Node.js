@@ -2,10 +2,12 @@ const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
+const methodOverride = require('method-override');
 
 dotenv.config(); 
 const app = express();
 
+app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -66,11 +68,43 @@ app.post('/travel', (req, res) => {
     db.query(_query, [name], (err, results)=>{
         if(err){
             console.error('데이터베이스 쿼리 실패 : ', err);
-            res.status(500)/send('Internal Server Error');
+            res.status(500).send('Internal Server Error');
             return;
         }
         res.redirect('/travel');
     });
+});
+
+app.put('/travel/:id', (req, res) => {
+    const travelid = req.params.id;
+    const {name} = req.body;
+    const _query = 'UPDATE travelList SET name=? WHERE id=?';
+    db.query(_query, [name, travelid], (err, results)=>{
+        if(err){
+            console.err('데이터베이스 쿼리 실패 : ', err);
+            res.status(500).send('DB 서버 에러');
+            return;
+        }
+        res.render('UpdateSuccess');
+    });
+});
+
+app.get('/travel/:id/edit', (req, res) => {
+    const travelId = req.params.id;
+    const query = 'SELECT * FROM travelList WHERE id = ?';
+    db.query(query, [travelId], (err, results)=>{
+        if(err){
+            console.error('데이터베이스 쿼리 실패 : ', err);
+            res.status(500).end('Internal Server Error');
+            return;
+        }
+        if(results.length === 0){
+            res.status(404).send('여행지를 찾을 수 없습니다.');
+            return;
+        }
+        const travel = results[0];
+        res.render('editTravel', {travel});
+    });    
 });
 
 app.get('/add-travel', (req, res)=>{
