@@ -85,7 +85,7 @@ app.put('/travel/:id', (req, res) => {
             res.status(500).send('DB 서버 에러');
             return;
         }
-        res.render('UpdateSuccess');
+        res.render('updateSuccess');
     });
 });
 
@@ -110,6 +110,19 @@ app.get('/travel/:id/edit', (req, res) => {
 app.get('/add-travel', (req, res)=>{
     res.render('addTravel');
 })
+
+app.delete('/travel/:id', (req, res) => {
+    const travelId = req.params.id;
+    const _query = 'DELETE FROM travelList WHERE id=?';
+    db.query(_query, [travelId], (err, results)=>{
+        if(err){
+            console.err('데이터베이스 쿼리 실패 : ', err);
+            res.status(500).send('DB 서버 에러');
+            return;
+        }
+        res.render('deleteSuccess');
+    });
+});
 
 app.use((req, res) => {
 
